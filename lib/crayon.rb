@@ -24,9 +24,9 @@ module Crayon
   def newline?; @@newline; end
   def io; $stderr; end
 
-  def self.print; @@newline = false; end
+  def self.print; @@newline = false; return Crayon; end
 
-  def self.puts; @@newline = true; end
+  def self.puts; @@newline = true; return Crayon; end
 
   def method_missing(method_name, string)
     io.print prepare_string(string, *parse_method_name(method_name))
