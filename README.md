@@ -27,14 +27,14 @@ Download and install this gem
 To include this gem in a project
   require 'crayon'
 
-The following are all methods that <code>Crayon</code> understands, and should give you an idea of what is possible.
+The following are all methods that `Crayon` understands, and should give you an idea of what is possible.
 
     Crayon.blue("this will be printed as blue text")
     Crayon.on_red("this will be printed on a red background")
     Crayon.bold("this will be bold")
     Crayon.underline_blue_on_yellow("this will be underlined blue text on a yellow background")
 
-Crayon also provides intermediary methods `puts` and `print` which determine whether Crayon adds a newline to the end of the text being displayed.
+`Crayon` also provides intermediary methods `puts` and `print` which determine whether `Crayon` adds a newline to the end of the text being displayed.
 By default, a newline is added.
 
     Crayon.puts.blue("this is on a line by itself.")
@@ -51,7 +51,7 @@ By default, a newline is added.
 
 ## Flexibility
 
-The order of elements in the method name is also unimportant. For example
+The order of elements in the method name is unimportant. For example
 
     Color.bold_underline_blue_on_yellow("sample text")
 
