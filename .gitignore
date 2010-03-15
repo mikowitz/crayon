@@ -1,20 +1,9 @@
-## MAC OS
-.DS_Store
-
-## TEXTMATE
-*.tmproj
-tmtags
-
-## EMACS
-*~
-\#*
-.\#*
-
-## VIM
+# VIM
 *.swp
 
 ## PROJECT::GENERAL
 coverage
+diff
 rdoc
 pkg
 
