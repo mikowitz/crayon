@@ -1,17 +1,45 @@
 = crayon
 
-Description goes here.
+=== current version : 0.0.2
 
-== Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+http://github.com/mikowitz/crayon
+
+== Description
+
+A simple, flexible gem that provides an open-ended API to print colored and styled output to the terminal.
+
+== Installation
+
+Install the gemcutter gem
+  ~$ gem install gemcutter
+Add gemcutter.org to your gem remote sources
+  ~$ gem tumble
+Download and install this gem
+  ~$ gem install crayon
+
+== Usage examples
+
+To include this gem in a project
+  require 'crayon'
+
+The following are all methods that <code>Crayon</code> understands, and should give you an idea of what is possible.
+
+  Crayon.blue("this will be printed as blue text")
+  Crayon.on_red("this will be printed on a red background")
+  Crayon.bold("this will be bold")
+  Crayon.underline_blue_on_yellow("this will be underlined blue text on a yellow background")
+
+The order of elements in the method name is also unimportant. For example
+
+  Color.bold_underline_blue_on_yellow("sample text")
+
+will look the same as
+
+  Color.on_yellow_bold_blue_underline("sample text")
+
+Check out <code>test/proof.rb"</code> and <code>`rake proof`</code> if you don't believe me.
 
 == Copyright
 
 Copyright (c) 2010 Michael Berkowitz. See LICENSE for details.
+

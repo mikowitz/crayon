@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "crayon"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{a new version of 'color' with a less common name.}
+    gem.description = %Q{A simple, flexible gem that provides an open-ended API to print colored and styled output to the terminal.}
     gem.email = "michael.berkowitz@gmail.com"
     gem.homepage = "http://github.com/mikowitz/crayon"
     gem.authors = ["Michael Berkowitz"]
