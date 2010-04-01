@@ -25,7 +25,8 @@ Download and install this gem
 ## Usage examples
 
 To include this gem in a project
-  require 'crayon'
+
+    require 'crayon'
 
 The following are all methods that `Crayon` understands, and should give you an idea of what is possible.
 
