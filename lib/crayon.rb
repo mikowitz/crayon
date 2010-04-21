@@ -39,7 +39,7 @@ module Crayon
       prepare_background_color(background),
       prepare_formatting(*formatting),
       string,
-      TERMINATION_STRING,
+      (TERMINATION_STRING if foreground || background || !formatting.empty?),
       (newline? ? "\n" : "")
     ].join("")
   end
