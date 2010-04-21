@@ -1,6 +1,6 @@
 # crayon
 
-### current version : 0.0.5
+### current version : 1.0.0.a
 
 [http://github.com/mikowitz/crayon][github]
 
