@@ -1,3 +1,7 @@
+### 1.0.1 : 04/21/10
+
+* Adds deprecation warnings for `puts` and `print`
+
 ### 1.0.0 : 04/21/10
 
 * Fixed bug where a method name which has `on_` followed by anything not an allowed color would return an underlined string.
