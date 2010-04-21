@@ -79,6 +79,12 @@ describe "Crayon" do
     test_parse_method_name(:red_green, "red", nil, [])
     test_parse_method_name(:red_bold_underline, "red", nil, ["bold", "underline"])
     test_parse_method_name(:underline_on_green_bold, nil, "green", ["underline", "bold"])
+
+    describe "with invalid input" do
+      test_parse_method_name(:notacolor, nil, nil, [])
+      test_parse_method_name(:on_notacolor, nil, nil, [])
+      test_parse_method_name(:blue_on_notacolor, "blue", nil, [])
+    end
   end
 
   describe "prepare_string" do

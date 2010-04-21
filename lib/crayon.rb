@@ -46,7 +46,8 @@ module Crayon
     _idx = @method_name.index("on")
     if _idx
       @method_name.delete("on")
-      return @method_name.delete_at(_idx)
+      _background = @method_name.delete_at(_idx)
+      _background if COLORS.keys.include?(_background)
     end
   end
 
