@@ -1,3 +1,9 @@
+### 1.0.0 : 04/21/10
+
+* Fixed bug where a method name which has `on_` followed by anything not an allowed color would return an underlined string.
+* Set `method_missing` to return `Crayon` so color methods can be chained.
+* Crayon can handle mixed-case method names.
+
 ### 0.0.5 : 04/21/10
 
 * Moved functionality from passing variables between methods to using instance variables.

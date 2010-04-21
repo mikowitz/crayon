@@ -1,6 +1,6 @@
 # crayon
 
-### current version : 1.0.0.a
+### current version : 1.0.0
 
 [http://github.com/mikowitz/crayon][github]
 
@@ -53,6 +53,10 @@ By default, a newline is added.
 You can also chain color calls without having to call `Crayon` multiple times
 
     Crayon.print.red("red").blue("blue").puts.green("green")
+
+`Crayon` will also handle mixed-case method calls
+
+    Crayon.ReD_ON_gREEN("It's Christmas!")
 
 ## Flexibility
 
