@@ -43,7 +43,8 @@ module Crayon
 
   # @private
   def parse_background
-    if _idx = @method_name.index("on")
+    _idx = @method_name.index("on")
+    if _idx
       @method_name.delete("on")
       return @method_name.delete_at(_idx)
     end
