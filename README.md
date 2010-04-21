@@ -2,7 +2,7 @@
 
 ### current version : 0.0.3
 
-http://github.com/mikowitz/crayon
+[http://github.com/mikowitz/crayon][github]
 
 ## Description
 
@@ -66,3 +66,4 @@ Check out `test/proof.rb` and `~$ rake proof` if you don't believe me.
 
 Copyright (c) 2010 Michael Berkowitz. See LICENSE for details.
 
+[github]: http://github.com/mikowitz/crayon "Crayon repository"
