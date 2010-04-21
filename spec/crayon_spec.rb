@@ -1,14 +1,31 @@
 require File.expand_path(File.dirname(__FILE__) + "/helper")
 
 def test_parse_method_name(input, *output)
-  it "should return #{output.inspect} for :#{input}" do
-    Crayon.parse_method_name(input).should == output
+  describe "for input :#{input}" do
+    before do
+      Crayon.method_name = input
+      Crayon.parse_method_name
+      @fore, @back, @form = output
+    end
+    after { [:foreground, :background, :formatting].each {|method| Crayon.send(:"#{method}=", nil) } }
+    it "should return #{@fore.inspect} for foreground" do
+      Crayon.foreground.should == @fore
+    end
+    it "should return #{@back.inspect} for background" do
+      Crayon.background.should == @back
+    end
+    it "should return #{@form.inspect} for formatting" do
+      Crayon.formatting.should == @form
+    end
   end
 end
 
 def test_prepare_string(expected_output, *args)
   it "should return correctly for #{args.inspect}" do
-    Crayon.prepare_string(*args).should == expected_output
+    Crayon.foreground = args.fetch(1) { nil }
+    Crayon.background = args.fetch(2) { nil }
+    Crayon.formatting = args.fetch(3) { []  }
+    Crayon.prepare_string(args.first).should == expected_output
   end
 end
 
@@ -29,11 +46,26 @@ describe "Crayon" do
     end
   end
   describe "method_missing" do
-    before do
-      Crayon.should_receive(:prepare_string).with("hello", "red", nil, [])
+    describe "should call :prepare string" do
+      before { Crayon.should_receive(:prepare_string).with("hello") }
+      it "when Crayon.red is called" do
+        Crayon.red("hello")
+      end
     end
-    it "should call :prepare_string when Crayon.red is called" do
-      Crayon.red("hello")
+    describe "should unset instance variables after being called" do
+      before { Crayon.bold_red_on_green("hello") }
+      it "should unset foreground" do
+        Crayon.foreground.should be_nil
+      end
+      it "should unset background" do
+        Crayon.background.should be_nil
+      end
+      it "should unset formatting" do
+        Crayon.formatting.should be_empty
+      end
+      it "should unset method_name" do
+        Crayon.method_name.should be_nil
+      end
     end
   end
   describe "parse_method_name" do

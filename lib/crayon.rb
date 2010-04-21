@@ -1,58 +1,32 @@
 module Crayon
   extend self
 
-  # @private
-  @@newline = true
+  class << self
+    # @private
+    attr_accessor :foreground, :background, :formatting, :method_name, :color, :newline
+  end
 
   # @private
-  COLORS = {
-    "black" => 0,
-    "red" => 1,
-    "green" => 2,
-    "yellow" => 3,
-    "blue" => 4,
-    "magenta" => 5,
-    "cyan" => 6,
-    "white" => 7
-  }
-
+  COLORS = { "black" => 0, "red" => 1, "green" => 2, "yellow" => 3, "blue" => 4, "magenta" => 5, "cyan" => 6, "white" => 7 }
   # @private
-  FORMATS = {
-    "bold" => 1,
-    "underline" => 4
-  }
-
+  FORMATS = { "bold" => 1, "underline" => 4 }
   # @private
   TERMINATION_STRING = "\e[0m"
 
   # @private
-  def newline?; @@newline; end
+  def newline?; @newline.nil? ? true : @newline; end
   # @private
   def io; $stderr; end
 
-  def self.print; @@newline = false; return Crayon; end
+  def self.print; @newline = false; return Crayon; end
 
-  def self.puts; @@newline = true; return Crayon; end
+  def self.puts; @newline = true; return Crayon; end
 
   def method_missing(method_name, string)
-    io.print prepare_string(string, *parse_method_name(method_name))
-    io.flush
-  end
-
-  ##
-  # Builds output string with color escape characters.
-  # @example
-  #   Crayon.prepare_string('hello', 'red', 'blue', ['underline'])  #=>  "\e[31m\e[44m\e[4mhello\e[0m"
-  # @private
-  def prepare_string(string, foreground=nil, background=nil, formatting=[])
-    [
-      prepare_foreground_color(foreground),
-      prepare_background_color(background),
-      prepare_formatting(*formatting),
-      string,
-      (TERMINATION_STRING if foreground || background || !formatting.empty?),
-      (newline? ? "\n" : "")
-    ].join("")
+    @method_name = method_name
+    parse_method_name
+    io.print prepare_string(string)
+    nullify_variables
   end
 
   ##
@@ -60,36 +34,74 @@ module Crayon
   # @example
   #   Crayon.parse_method_name(:bold_red_on_green)  #=>  "['red', 'green', ['bold']]"
   # @private
-  def parse_method_name(method_name)
-    _name = method_name.to_s.split("_")
-    if _idx = _name.index("on")
-      _name.delete("on")
-      _background_color = _name.delete_at(_idx)
+  def parse_method_name
+    @method_name = @method_name.to_s.split("_")
+    @background = parse_background
+    @foreground = parse_foreground
+    @formatting = parse_formatting
+  end
+
+  # @private
+  def parse_background
+    if _idx = @method_name.index("on")
+      @method_name.delete("on")
+      return @method_name.delete_at(_idx)
     end
-    _foreground_color = _name.find {|color| COLORS.keys.include?(color) }
-    _formatting = _name.select{|format| FORMATS.keys.include?(format) }
-    [_foreground_color, _background_color, _formatting]
   end
 
   # @private
-  def prepare_foreground_color(color=nil)
-    handle_color(3, color)
+  def parse_foreground
+    @method_name.find {|color| COLORS.keys.include?(color) }
   end
 
   # @private
-  def prepare_background_color(color=nil)
-    handle_color(4, color)
+  def parse_formatting
+    @method_name.select {|format| FORMATS.keys.include?(format) }
+  end
+
+  ##
+  # Builds output string with color escape characters.
+  # @example
+  #   Crayon.prepare_string('hello', 'red', 'blue', ['underline'])  #=>  "\e[31m\e[44m\e[4mhello\e[0m"
+  # @private
+  def prepare_string(string) #, foreground=nil, background=nil, formatting=[])
+    [ prepare_foreground_color,
+      prepare_background_color,
+      prepare_formatting,
+      string,
+      (TERMINATION_STRING if @foreground || @background || !@formatting.empty?),
+      (newline? ? "\n" : "")
+    ].join("")
   end
 
   # @private
-  def prepare_formatting(*formats)
-    return "" if formats.empty?
-    formats.map{|f| "\e[#{FORMATS[f]}m"}.join("")
+  def prepare_foreground_color
+    @color = @foreground
+    handle_color(3)
   end
 
   # @private
-  def handle_color(lead, color=nil)
-    return "" unless color
-    "\e[#{lead}#{COLORS[color]}m"
+  def prepare_background_color
+    @color = @background
+    handle_color(4)
+  end
+
+  # @private
+  def prepare_formatting
+    return "" if @formatting.empty?
+    @formatting.map{|format| "\e[#{FORMATS[format]}m"}.join("")
+  end
+
+  # @private
+  def handle_color(lead)
+    return "" unless @color
+    "\e[#{lead}#{COLORS[@color]}m"
+  end
+
+  # @private
+  def nullify_variables
+    @foreground, @background, @formatting = nil, nil, []
+    @method_name, @color = nil, nil
+    io.flush
   end
 end
