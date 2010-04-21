@@ -32,7 +32,7 @@ describe "Crayon" do
     before do
       Crayon.should_receive(:prepare_string).with("hello", "red", nil, [])
     end
-    it "should work" do
+    it "should call :prepare_string when Crayon.red is called" do
       Crayon.red("hello")
     end
   end
