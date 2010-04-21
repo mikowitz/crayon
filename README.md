@@ -1,8 +1,12 @@
 # crayon
 
-### current version : 1.0.0
+### current version : 1.0.1
 
 [http://github.com/mikowitz/crayon][github]
+
+### version warnings
+
+* `puts` and `print` will be deprecated. `Crayon` will no longer contain an IO object, but will only return strings
 
 ## Description
 

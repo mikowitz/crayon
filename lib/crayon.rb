@@ -18,9 +18,15 @@ module Crayon
   # @private
   def io; $stderr; end
 
-  def self.print; @newline = false; return Crayon; end
+  def self.print
+    Kernel::puts "Color.print is deprecated and will be removed in version 1.1.0."
+    @newline = false; return Crayon
+  end
 
-  def self.puts; @newline = true; return Crayon; end
+  def self.puts
+    Kernel::puts "Color.puts is deprecated and will be removed in version 1.1.0."
+    @newline = true; return Crayon
+  end
 
   def method_missing(method_name, string)
     @method_name = method_name
