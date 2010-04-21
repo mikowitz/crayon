@@ -27,6 +27,7 @@ module Crayon
     parse_method_name
     io.print prepare_string(string)
     nullify_variables
+    Crayon
   end
 
   ##

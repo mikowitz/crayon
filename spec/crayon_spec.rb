@@ -45,6 +45,9 @@ describe "Crayon" do
       Crayon.newline?.should be
     end
   end
+  it "chaining color calls should be allowed by return Crayon from method_missing" do
+    Crayon.red("OK").should == Crayon
+  end
   describe "method_missing" do
     describe "should call :prepare string" do
       before { Crayon.should_receive(:prepare_string).with("hello") }

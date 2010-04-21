@@ -50,6 +50,10 @@ By default, a newline is added.
     Crayon.puts.cyan("Also on the first line, but with a trailing newline")
     Crayon.blue("On the second line by itself.")
 
+You can also chain color calls without having to call `Crayon` multiple times
+
+    Crayon.print.red("red").blue("blue").puts.green("green")
+
 ## Flexibility
 
 The order of elements in the method name is unimportant. For example
