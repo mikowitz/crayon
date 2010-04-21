@@ -36,7 +36,7 @@ module Crayon
   #   Crayon.parse_method_name(:bold_red_on_green)  #=>  "['red', 'green', ['bold']]"
   # @private
   def parse_method_name
-    @method_name = @method_name.to_s.split("_")
+    @method_name = @method_name.to_s.downcase.split("_")
     @background = parse_background
     @foreground = parse_foreground
     @formatting = parse_formatting

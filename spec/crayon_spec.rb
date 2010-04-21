@@ -82,6 +82,15 @@ describe "Crayon" do
     test_parse_method_name(:red_green, "red", nil, [])
     test_parse_method_name(:red_bold_underline, "red", nil, ["bold", "underline"])
     test_parse_method_name(:underline_on_green_bold, nil, "green", ["underline", "bold"])
+    
+    describe "with mixed-case input" do
+      test_parse_method_name(:RED, "red", nil, [])
+      test_parse_method_name(:ON_red, nil, "red", [])
+      test_parse_method_name(:bOld, nil, nil, ["bold"])
+
+      test_parse_method_name(:BlUe_on_GREEN, "blue", "green", [])
+      test_parse_method_name(:UNDERline_oN_Green_BOLD, nil, "green", ["underline", "bold"])
+    end
 
     describe "with invalid input" do
       test_parse_method_name(:notacolor, nil, nil, [])
