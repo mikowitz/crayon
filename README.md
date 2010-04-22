@@ -1,6 +1,6 @@
 # crayon
 
-### current version : 1.0.1
+### current version : 1.0.2
 
 [http://github.com/mikowitz/crayon][github]
 
@@ -39,28 +39,33 @@ The following are all methods that `Crayon` understands, and should give you an 
     Crayon.bold("this will be bold")
     Crayon.underline_blue_on_yellow("this will be underlined blue text on a yellow background")
 
-`Crayon` also provides intermediary methods `puts` and `print` which determine whether `Crayon` adds a newline to the end of the text being displayed.
-By default, a newline is added.
+### `puts` and `print` deprecation warning
 
-    Crayon.puts.blue("this is on a line by itself.")
-    Crayon.print.blue("the next line will be printed right next to this")
-    Crayon.puts.green("this will on the second line of output, but will create a newline.")
+As of version 1.0.2, `puts` and `print` no longer control adding a newline to the end of Crayon-ed text. The methods themselves will remain in the code base until version 1.1.0, but will issue deprecation warnings, and have no real effect on the code. Instead of a line of code looking like this:
 
-`puts` and `print` set an internal, persistent variable, so a specified newline presence or absence will last until `puts` or `print` is invoked again.
+    Crayon.print.red("red, ").blue("blue, ").puts.green("and green")
 
-    Crayon.print.blue("on the first line")
-    Crayon.green("also on the first line")
-    Crayon.red("also on the first line")
-    Crayon.puts.cyan("Also on the first line, but with a trailing newline")
-    Crayon.blue("On the second line by itself.")
+you have a line of code like this:
+
+    puts Crayon.red("red, ").blue("blue, ").green("and green")
+
+This change is mostly due to the fact that defining Crayon's IO object would make using Crayon inside of another project more complicated than it would need to be. Crayon now simply returns a formatted string.
+
+### chaining
 
 You can also chain color calls without having to call `Crayon` multiple times
 
-    Crayon.print.red("red").blue("blue").puts.green("green")
+    Crayon.red("red").blue("blue").green("green")
+
+### case flexibility
 
 `Crayon` will also handle mixed-case method calls
 
     Crayon.ReD_ON_gREEN("It's Christmas!")
+
+Of course, this is no different from calling
+
+    Crayon.red_on_green("It's Christmas!")
 
 ## Flexibility
 
