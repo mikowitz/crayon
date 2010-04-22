@@ -1,4 +1,10 @@
+$:.unshift File.dirname(__FILE__) + "/crayon"
+
+%w{ method_parser string_builder}.each {|file| require file }
+
 module Crayon
+  include Crayon::MethodParser
+  include Crayon::StringBuilder
   extend self
 
   class << self
@@ -29,71 +35,6 @@ module Crayon
     prepare_string(string)
     nullify_variables
     Crayon
-  end
-
-  ##
-  # Converts a method name into color and formatting parameters
-  # @private
-  def parse_method_name
-    @method_name = @method_name.to_s.downcase.split("_")
-    @background = parse_background
-    @foreground = parse_foreground
-    @formatting = parse_formatting
-  end
-
-  # @private
-  def parse_background
-    _idx = @method_name.index("on")
-    return nil unless _idx
-    @method_name.delete("on")
-    _background = @method_name.delete_at(_idx)
-    _background if COLORS.keys.include?(_background)
-  end
-
-  # @private
-  def parse_foreground
-    @method_name.find {|color| COLORS.keys.include?(color) }
-  end
-
-  # @private
-  def parse_formatting
-    @method_name.select {|format| FORMATS.keys.include?(format) }
-  end
-
-  ##
-  # Builds output string with color escape characters.
-  # @private
-  def prepare_string(string)
-    [ prepare_foreground_color,
-      prepare_background_color,
-      prepare_formatting,
-      string,
-      (TERMINATION_STRING if @foreground || @background || !@formatting.empty?)
-    ].join("")
-  end
-
-  # @private
-  def prepare_foreground_color
-    @color = @foreground
-    handle_color(3)
-  end
-
-  # @private
-  def prepare_background_color
-    @color = @background
-    handle_color(4)
-  end
-
-  # @private
-  def prepare_formatting
-    return "" if @formatting.empty?
-    @formatting.map{|format| "\e[#{FORMATS[format]}m"}.join("")
-  end
-
-  # @private
-  def handle_color(lead)
-    return "" unless @color
-    "\e[#{lead}#{COLORS[@color]}m"
   end
 
   # @private
