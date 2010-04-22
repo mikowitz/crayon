@@ -1,3 +1,12 @@
+### 1.0.3 : 04/22/10
+
+* Broke Crayon functionality out into separate modules
+* Added CrayonString class to allow chaining methods
+
+### 1.0.2 : 04/21/10
+
+* Removed last references to the `newline` and `io` methods.
+
 ### 1.0.1 : 04/21/10
 
 * Adds deprecation warnings for `puts` and `print`
