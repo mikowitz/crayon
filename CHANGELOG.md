@@ -1,3 +1,7 @@
+### 1.1.0 : 04/22/10
+
+* Removed `puts` and `print` methods
+
 ### 1.0.3 : 04/22/10
 
 * Broke Crayon functionality out into separate modules

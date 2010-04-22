@@ -1,12 +1,8 @@
 # crayon
 
-### current version : 1.0.3
+### current version : 1.1.0
 
 [http://github.com/mikowitz/crayon][github]
-
-### version warnings
-
-* `puts` and `print` will be deprecated. `Crayon` will no longer contain an IO object, but will only return strings
 
 ## Description
 
@@ -39,18 +35,6 @@ The following are all methods that `Crayon` understands, and should give you an 
     Crayon.bold("this will be bold")
     Crayon.underline_blue_on_yellow("this will be underlined blue text on a yellow background")
 
-### `puts` and `print` deprecation warning
-
-As of version 1.0.2, `puts` and `print` no longer control adding a newline to the end of Crayon-ed text. The methods themselves will remain in the code base until version 1.1.0, but will issue deprecation warnings, and have no real effect on the code. Instead of a line of code looking like this:
-
-    Crayon.print.red("red, ").blue("blue, ").puts.green("and green")
-
-you have a line of code like this:
-
-    puts Crayon.red("red, ").blue("blue, ").green("and green")
-
-This change is mostly due to the fact that defining Crayon's IO object would make using Crayon inside of another project more complicated than it would need to be. Crayon now simply returns a formatted string.
-
 ### chaining
 
 You can also chain color calls without having to call `Crayon` multiple times
@@ -78,6 +62,14 @@ will look the same as
     Color.on_yellow_bold_blue_underline("sample text")
 
 Check out `test/proof.rb` and `~$ rake proof` if you don't believe me.
+
+## Return values
+
+Crayon simply returns a formatted string
+
+    Color.red("red, ").blue("and blue") #=> "\e[31mred, \e[0m\e[34mand blue\e[0m"
+
+So any call to `Crayon` must be `puts` or `print`-ed in order for the content to be displayed with the proper coloring.
 
 ## Copyright
 
