@@ -5,6 +5,6 @@ class CrayonString < String
     nullify_variables
     @method_name = method_name
     parse_method_name
-    self + CrayonString.new(prepare_string(string))
+    CrayonString.new(self + prepare_string(string))
   end
 end
