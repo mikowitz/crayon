@@ -46,11 +46,10 @@ module Crayon
   # @private
   def parse_background
     _idx = @method_name.index("on")
-    if _idx
-      @method_name.delete("on")
-      _background = @method_name.delete_at(_idx)
-      _background if COLORS.keys.include?(_background)
-    end
+    return nil unless _idx
+    @method_name.delete("on")
+    _background = @method_name.delete_at(_idx)
+    _background if COLORS.keys.include?(_background)
   end
 
   # @private
