@@ -1,10 +1,6 @@
 # crayon
 
-### current version : 1.0.3.a
-
-## Version 1.0.3.a is broken!
-
-Some changes didn't work out quite the way I wanted them, so version 1.0.3.a does not, in fact, behave as it should. The last stable version is 1.0.0. I'm working to fix it. Sorry about this.
+### current version : 1.0.3
 
 [http://github.com/mikowitz/crayon][github]
 
