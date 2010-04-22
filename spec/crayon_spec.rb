@@ -30,8 +30,13 @@ def test_prepare_string(expected_output, *args)
 end
 
 describe "Crayon" do
-  it "chaining color calls should be allowed by returning a CrayonString from method_missing" do
-    Crayon.red("OK").should be_a CrayonString
+  describe "chaining color calls" do
+    it "should be allowed by returning a CrayonString from method_missing" do
+      Crayon.red("OK").should be_a CrayonString
+    end
+    it "should return the full chained string" do
+      Crayon.red("OK").blue("OK").underline("OK").should == "\e[31mOK\e[0m\e[34mOK\e[0m\e[4mOK\e[0m"
+    end
   end
   describe "method_missing" do
     describe "should call :prepare string" do
