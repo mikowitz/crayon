@@ -33,8 +33,6 @@ module Crayon
 
   ##
   # Converts a method name into color and formatting parameters
-  # @example
-  #   Crayon.parse_method_name(:bold_red_on_green)  #=>  "['red', 'green', ['bold']]"
   # @private
   def parse_method_name
     @method_name = @method_name.to_s.downcase.split("_")
@@ -64,10 +62,8 @@ module Crayon
 
   ##
   # Builds output string with color escape characters.
-  # @example
-  #   Crayon.prepare_string('hello', 'red', 'blue', ['underline'])  #=>  "\e[31m\e[44m\e[4mhello\e[0m"
   # @private
-  def prepare_string(string) #, foreground=nil, background=nil, formatting=[])
+  def prepare_string(string)
     [ prepare_foreground_color,
       prepare_background_color,
       prepare_formatting,
