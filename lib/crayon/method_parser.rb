@@ -1,4 +1,5 @@
 module Crayon
+  # @private
   module MethodParser
     ##
     # Converts a method name into color and formatting parameters

@@ -1,4 +1,5 @@
 module Crayon
+  # @private
   module StringBuilder
     ##
     # Builds output string with color escape characters.
