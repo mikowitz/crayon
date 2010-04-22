@@ -30,29 +30,14 @@ def test_prepare_string(expected_output, *args)
 end
 
 describe "Crayon" do
-  it "chaining color calls should be allowed by return Crayon from method_missing" do
-    Crayon.red("OK").should == Crayon
+  it "chaining color calls should be allowed by returning a CrayonString from method_missing" do
+    Crayon.red("OK").should be_a CrayonString
   end
   describe "method_missing" do
     describe "should call :prepare string" do
       before { Crayon.should_receive(:prepare_string).with("hello") }
       it "when Crayon.red is called" do
         Crayon.red("hello")
-      end
-    end
-    describe "should unset instance variables after being called" do
-      before { Crayon.bold_red_on_green("hello") }
-      it "should unset foreground" do
-        Crayon.foreground.should be_nil
-      end
-      it "should unset background" do
-        Crayon.background.should be_nil
-      end
-      it "should unset formatting" do
-        Crayon.formatting.should be_empty
-      end
-      it "should unset method_name" do
-        Crayon.method_name.should be_nil
       end
     end
   end

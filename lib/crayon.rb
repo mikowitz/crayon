@@ -1,6 +1,6 @@
 $:.unshift File.dirname(__FILE__) + "/crayon"
 
-%w{ method_parser string_builder}.each {|file| require file }
+%w{ method_parser string_builder crayon_string}.each {|file| require file }
 
 module Crayon
   include Crayon::MethodParser
@@ -30,11 +30,10 @@ module Crayon
   end
 
   def method_missing(method_name, string)
+    nullify_variables
     @method_name = method_name
     parse_method_name
-    prepare_string(string)
-    nullify_variables
-    Crayon
+    CrayonString.new(prepare_string(string))
   end
 
   # @private

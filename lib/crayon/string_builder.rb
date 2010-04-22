@@ -9,7 +9,7 @@ module Crayon
         prepare_formatting,
         string,
         (TERMINATION_STRING if @foreground || @background || !@formatting.empty?)
-      ].join("")
+      ].compact.join("")
     end
 
     # @private
