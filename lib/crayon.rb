@@ -3,7 +3,7 @@ module Crayon
 
   class << self
     # @private
-    attr_accessor :foreground, :background, :formatting, :method_name, :color, :newline
+    attr_accessor :foreground, :background, :formatting, :method_name, :color
   end
 
   # @private
@@ -13,25 +13,20 @@ module Crayon
   # @private
   TERMINATION_STRING = "\e[0m"
 
-  # @private
-  def newline?; @newline.nil? ? true : @newline; end
-  # @private
-  def io; $stderr; end
-
   def self.print
     Kernel::puts "Color.print is deprecated and will be removed in version 1.1.0."
-    @newline = false; return Crayon
+    return Crayon
   end
 
   def self.puts
     Kernel::puts "Color.puts is deprecated and will be removed in version 1.1.0."
-    @newline = true; return Crayon
+    return Crayon
   end
 
   def method_missing(method_name, string)
     @method_name = method_name
     parse_method_name
-    io.print prepare_string(string)
+    prepare_string(string)
     nullify_variables
     Crayon
   end
@@ -78,8 +73,7 @@ module Crayon
       prepare_background_color,
       prepare_formatting,
       string,
-      (TERMINATION_STRING if @foreground || @background || !@formatting.empty?),
-      (newline? ? "\n" : "")
+      (TERMINATION_STRING if @foreground || @background || !@formatting.empty?)
     ].join("")
   end
 
@@ -111,6 +105,5 @@ module Crayon
   def nullify_variables
     @foreground, @background, @formatting = nil, nil, []
     @method_name, @color = nil, nil
-    io.flush
   end
 end
