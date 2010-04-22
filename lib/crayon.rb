@@ -19,16 +19,6 @@ module Crayon
   # @private
   TERMINATION_STRING = "\e[0m"
 
-  def self.print
-    Kernel::puts "Color.print is deprecated and will be removed in version 1.1.0."
-    return Crayon
-  end
-
-  def self.puts
-    Kernel::puts "Color.puts is deprecated and will be removed in version 1.1.0."
-    return Crayon
-  end
-
   def method_missing(method_name, string)
     nullify_variables
     @method_name = method_name
