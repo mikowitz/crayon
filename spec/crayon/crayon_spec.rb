@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + "/helper")
+require "spec_helper"
 
 def test_parse_method_name(input, *output)
   describe "for input :#{input}" do
@@ -7,40 +7,42 @@ def test_parse_method_name(input, *output)
       Crayon.parse_method_name
       @fore, @back, @form = output
     end
-    after { [:foreground, :background, :formatting].each {|method| Crayon.send(:"#{method}=", nil) } }
     it "should return #{@fore.inspect} for foreground" do
-      Crayon.foreground.should == @fore
+      expect(Crayon.foreground).to eq @fore
     end
     it "should return #{@back.inspect} for background" do
-      Crayon.background.should == @back
+      expect(Crayon.background).to eq @back
     end
     it "should return #{@form.inspect} for formatting" do
-      Crayon.formatting.should == @form
+      expect(Crayon.formatting).to eq @form
     end
   end
 end
 
 def test_prepare_string(expected_output, *args)
   it "should return correctly for #{args.inspect}" do
-    Crayon.foreground = args.fetch(1) { nil }
-    Crayon.background = args.fetch(2) { nil }
-    Crayon.formatting = args.fetch(3) { []  }
-    Crayon.prepare_string(args.first).should == expected_output
+    Crayon.foreground = args.fetch(1, nil)
+    Crayon.background = args.fetch(2, nil)
+    Crayon.formatting = args.fetch(3, [])
+    expect(Crayon.prepare_string(args.first)).to eq expected_output
   end
 end
 
 describe "Crayon" do
   describe "chaining color calls" do
     it "should be allowed by returning a CrayonString from method_missing" do
-      Crayon.red("OK").should be_a CrayonString
+      expect(Crayon.red("OK")).to be_a CrayonString
     end
     it "should return the full chained string" do
-      Crayon.red("OK").blue("OK").underline("OK").should == "\e[31mOK\e[0m\e[34mOK\e[0m\e[4mOK\e[0m"
+      expect(Crayon.red("OK").blue("OK").underline("OK")).to eq "\e[31mOK\e[0m\e[34mOK\e[0m\e[4mOK\e[0m"
+    end
+    it "should allow plain text in the middle of formatted text via .clear" do
+      expect(Crayon.red("OK").clear(" OK ").underline("OK")).to eq "\e[31mOK\e[0m OK \e[4mOK\e[0m"
     end
   end
   describe "method_missing" do
     describe "should call :prepare string" do
-      before { Crayon.should_receive(:prepare_string).with("hello") }
+      before { expect(Crayon).to receive(:prepare_string).with("hello") }
       it "when Crayon.red is called" do
         Crayon.red("hello")
       end

@@ -1,6 +1,5 @@
-$:.unshift File.dirname(__FILE__) + "/crayon"
-
-%w{ method_parser string_builder}.each {|file| require file }
+require "crayon/method_parser"
+require "crayon/string_builder"
 
 module Crayon
   include Crayon::MethodParser
@@ -8,30 +7,18 @@ module Crayon
   extend self
 
   class << self
-    # @private
     attr_accessor :foreground, :background, :formatting, :method_name, :color
   end
 
-  # @private
   COLORS = { "black" => 0, "red" => 1, "green" => 2, "yellow" => 3, "blue" => 4, "magenta" => 5, "cyan" => 6, "white" => 7 }
-  # @private
   FORMATS = { "bold" => 1, "underline" => 4 }
-  # @private
   TERMINATION_STRING = "\e[0m"
 
   def method_missing(method_name, string)
-    nullify_variables
     @method_name = method_name
     parse_method_name
     CrayonString.new(prepare_string(string) || "")
   end
-
-  # @private
-  def nullify_variables
-    @foreground, @background, @formatting = nil, nil, []
-    @method_name, @color = nil, nil
-  end
 end
 
-require 'crayon_string'
-
+require "crayon/crayon_string"
