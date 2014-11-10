@@ -7,7 +7,6 @@ def test_parse_method_name(input, *output)
       Crayon.parse_method_name
       @fore, @back, @form = output
     end
-    after { [:foreground, :background, :formatting].each {|method| Crayon.send(:"#{method}=", nil) } }
     it "should return #{@fore.inspect} for foreground" do
       expect(Crayon.foreground).to eq @fore
     end
@@ -22,9 +21,9 @@ end
 
 def test_prepare_string(expected_output, *args)
   it "should return correctly for #{args.inspect}" do
-    Crayon.foreground = args.fetch(1) { nil }
-    Crayon.background = args.fetch(2) { nil }
-    Crayon.formatting = args.fetch(3) { []  }
+    Crayon.foreground = args.fetch(1, nil)
+    Crayon.background = args.fetch(2, nil)
+    Crayon.formatting = args.fetch(3, [])
     expect(Crayon.prepare_string(args.first)).to eq expected_output
   end
 end

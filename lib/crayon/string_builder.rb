@@ -1,32 +1,34 @@
 module Crayon
   module StringBuilder
     def prepare_string(string)
-      [ prepare_foreground_color,
-        prepare_background_color,
-        prepare_formatting,
+      [ foreground_string,
+        background_string,
+        formatting_string,
         string,
-        (TERMINATION_STRING if @foreground || @background || !@formatting.empty?)
+        (TERMINATION_STRING if has_color?)
       ].compact.join("")
     end
 
-    def prepare_foreground_color
-      @color = @foreground
-      handle_color(3)
+    def has_color?
+      @foreground || @background || @formatting.any?
     end
 
-    def prepare_background_color
-      @color = @background
-      handle_color(4)
+    def foreground_string
+      handle_color(3, @foreground)
     end
 
-    def prepare_formatting
+    def background_string
+      handle_color(4, @background)
+    end
+
+    def formatting_string
       return "" if @formatting.empty?
       @formatting.map{|format| "\e[#{FORMATS[format]}m"}.join("")
     end
 
-    def handle_color(lead)
-      return "" unless @color
-      "\e[#{lead}#{COLORS[@color]}m"
+    def handle_color(lead, color)
+      return "" unless color
+      "\e[#{lead}#{COLORS[color]}m"
     end
   end
 end
