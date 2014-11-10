@@ -1,3 +1,4 @@
-source "http://rubygems.org"
-gem "yard"
-gem "rspec"
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in crayon.gemspec
+gemspec

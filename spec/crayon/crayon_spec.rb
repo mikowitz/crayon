@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + "/helper")
+require "spec_helper"
 
 def test_parse_method_name(input, *output)
   describe "for input :#{input}" do
