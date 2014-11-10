@@ -36,6 +36,9 @@ describe "Crayon" do
     it "should return the full chained string" do
       expect(Crayon.red("OK").blue("OK").underline("OK")).to eq "\e[31mOK\e[0m\e[34mOK\e[0m\e[4mOK\e[0m"
     end
+    it "should allow plain text in the middle of formatted text via .clear" do
+      expect(Crayon.red("OK").clear(" OK ").underline("OK")).to eq "\e[31mOK\e[0m OK \e[4mOK\e[0m"
+    end
   end
   describe "method_missing" do
     describe "should call :prepare string" do
