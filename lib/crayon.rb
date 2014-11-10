@@ -8,15 +8,11 @@ module Crayon
   extend self
 
   class << self
-    # @private
     attr_accessor :foreground, :background, :formatting, :method_name, :color
   end
 
-  # @private
   COLORS = { "black" => 0, "red" => 1, "green" => 2, "yellow" => 3, "blue" => 4, "magenta" => 5, "cyan" => 6, "white" => 7 }
-  # @private
   FORMATS = { "bold" => 1, "underline" => 4 }
-  # @private
   TERMINATION_STRING = "\e[0m"
 
   def method_missing(method_name, string)
@@ -26,12 +22,11 @@ module Crayon
     CrayonString.new(prepare_string(string) || "")
   end
 
-  # @private
   def nullify_variables
     @foreground, @background, @formatting = nil, nil, []
     @method_name, @color = nil, nil
   end
 end
 
-require 'crayon_string'
+require "crayon_string"
 

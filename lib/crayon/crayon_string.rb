@@ -1,8 +1,6 @@
-# @private
 class CrayonString < String
   include Crayon
 
-  # @private
   def method_missing(method_name, string)
     nullify_variables
     @method_name = method_name
