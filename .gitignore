@@ -1,3 +1,2 @@
 .DS_Store
-bench.rb
-*.html
+/pkg
